@@ -3,7 +3,7 @@ Config = Config or {}
 -- Side of the screen where you want the ui to be on. Can either be "left" or "right"
 Config.Side = "right"
 
-Config.MaxJobs = 3
+Config.MaxJobs = 5
 Config.IgnoredJobs = {
 	["unemployed"] = true,
 }
@@ -53,6 +53,8 @@ Config.WhitelistJobs = {
 	["splitsides"] = true,
 	["insurance"] = true,
 	["hornys"] = true,
+	["oneofonedealer"] = true,
+	["sadot"] = true,
 }
 
 Config.Descriptions = {
@@ -93,6 +95,8 @@ Config.Descriptions = {
 	["splitsides"] = "This is your bar if you love the color red!",
 	["insurance"] = "Help others with their insurance needs.",
 	["hornys"] = "The best place to feed your hunger!",
+	["oneofonedealer"] = "Give the people what they want!",
+	["sadot"] = "Go keep the roads of San Andreas safe!",
 	-- Not Whitelisted
 	["mailcarrier"] = "Deliver mail around San Andreas",
 	["trucker"] = "Deliver packages around San Andreas",
@@ -141,7 +145,9 @@ Config.FontAwesomeIcons = {
 	["limeys"] = "fa-solid fa-beer-mug",
 	["splitsides"] = "fa-solid fa-beer-mug",
 	["insurance"] = "fa-solid fa-sign-hanging",
-	["upnatom"] = "fa-solid fa-french-fries",
+	["hornys"] = "fa-solid fa-french-fries",
+	["oneofonedealer"] = "fa-solid fa-cards",
+	["sadot"] = "fa-solid fa-truck-pickup",
 	-- Not Whitelisted
 	["mailcarrier"] = "fa-sharp fa-solid fa-mailbox-flag-up",
 	["trucker"] = "fa-solid fa-truck-front",
