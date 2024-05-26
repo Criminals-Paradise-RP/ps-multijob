@@ -71,6 +71,31 @@ local function UpdatePlayerJob(Player, job, grade)
     end
 end
 
+local function UpdateJobRank(citizenid, job, grade)
+    local Player = QBCore.Functions.GetOfflinePlayerByCitizenId(citizenid)
+    if Player == nil then
+        return
+    end
+
+    local jobs = GetJobs(citizenid)
+    if jobs[job] == nil then
+        return
+    end
+    
+    jobs[job] = grade
+    
+    MySQL.update.await("update multijobs set jobdata = :jobdata where citizenid = :citizenid", {
+        citizenid = citizenid,
+        jobdata = json.encode(jobs),
+    })
+    
+    -- if the current job matches, then update
+    if Player.PlayerData.job.name == job then
+        UpdatePlayerJob(Player, job, grade)
+    end
+end
+exports("UpdateJobRank", UpdateJobRank)
+
 local function RemoveJob(citizenid, job)
     local Player = QBCore.Functions.GetPlayerByCitizenId(citizenid)
 
@@ -104,14 +129,14 @@ local function RemoveJob(citizenid, job)
 end
 exports("RemoveJob", RemoveJob)
 
-QBCore.Commands.Add('removejob', 'Remove Multi Job (Admin Only)', { { name = 'id', help = 'ID of player' }, { name = 'job', help = 'Job Name' }, { name = 'grade', help = 'Job Grade' } }, false, function(source, args)
+QBCore.Commands.Add('removejob', 'Remove Multi Job (Admin Only)', { { name = 'id', help = 'ID of player' }, { name = 'job', help = 'Job Name' } }, false, function(source, args)
     local source = source
     if source ~= 0 then
         if args[1] then
             local Player = QBCore.Functions.GetPlayer(tonumber(args[1]))
             if Player then
-                if args[2]and args[3] then
-                    RemoveJob(Player.PlayerData.citizenid, args[2], args[3])
+                if args[2] then
+                    RemoveJob(Player.PlayerData.citizenid, args[2])
                 else
                     TriggerClientEvent("QBCore:Notify", source, "Wrong usage!")
                 end
@@ -216,7 +241,7 @@ end)
 RegisterNetEvent("ps-multijob:removeJob",function(job, grade)
     local source = source
     local Player = QBCore.Functions.GetPlayer(source)
-    RemoveJob(Player.PlayerData.citizenid, job, grade)
+    RemoveJob(Player.PlayerData.citizenid, job)
 end)
 
 -- QBCORE EVENTS
